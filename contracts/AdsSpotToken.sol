@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IBunzz.sol";
 import "./interfaces/IContentsContract.sol";
 
-contract AdsSpotToken is ERC721Enumerable, IContentsContract, AccessControl, Ownable, IBunzz{
+contract AdsSpotToken is ERC721Enumerable, AccessControl, Ownable, IBunzz{
     address private contentsContractAddress;
     mapping(uint256 => uint256) private linkTable;
 
