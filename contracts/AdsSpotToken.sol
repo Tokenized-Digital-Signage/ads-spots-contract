@@ -46,7 +46,7 @@ contract AdsSpotToken is ERC721Enumerable, AccessControl, Ownable, IBunzz{
     }
 
     function mint(address to, uint256 _tokenId) external  {
-        require(hasRole(MINTER_ROLE, _msgSender()), "ERC721: must have minter role to mint");
+        // require(hasRole(MINTER_ROLE, _msgSender()), "ERC721: must have minter role to mint");
 
         _mint(to, _tokenId);
     }
