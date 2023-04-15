@@ -2,12 +2,11 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IBunzz.sol";
 
-contract AdsSpotToken is IERC721, ERC721Enumerable, AccessControl, Ownable, IBunzz{
+contract AdsSpotToken is ERC721Enumerable, AccessControl, Ownable, IBunzz{
     address private contentsContractAddress;
     mapping(uint256 => uint256) private linkTable;
 
@@ -85,13 +84,13 @@ contract AdsSpotToken is IERC721, ERC721Enumerable, AccessControl, Ownable, IBun
     }
 
     function getContentMetadata(uint256 tokenId) public view returns (string memory) {
-        IERC721 contentsContract = IERC721(contentsContractAddress);
+        ERC721Enumerable contentsContract = ERC721Enumerable(contentsContractAddress);
         uint256 contentsTokenId = linkTable[tokenId];
         return contentsContract.tokenURI(contentsTokenId);
     }
 
     function linkAdsSpotToContent(uint256 adsSpotTokenId, uint256 contentTokenId) private {
-        IERC721 contentsContract = IERC721(contentsContractAddress);
+        ERC721Enumerable contentsContract = ERC721Enumerable(contentsContractAddress);
         require(ownerOf(adsSpotTokenId) == contentsContract.ownerOf(contentTokenId));
         linkTable[adsSpotTokenId] = contentTokenId;
     }
