@@ -78,7 +78,7 @@ contract AdsSpotToken is ERC721, ERC721Enumerable, AccessControl, Ownable, IBunz
         public
         view
         virtual
-        override(AccessControl, ERC721Enumerabl)
+        override(AccessControl, ERC721Enumerable)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
