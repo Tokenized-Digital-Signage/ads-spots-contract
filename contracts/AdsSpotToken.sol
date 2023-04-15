@@ -5,8 +5,9 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IBunzz.sol";
+import "./interfaces/IContentsContract.sol";
 
-contract AdsSpotToken is ERC721Enumerable, AccessControl, Ownable, IBunzz{
+contract AdsSpotToken is ERC721Enumerable, IContentsContract, AccessControl, Ownable, IBunzz{
     address private contentsContractAddress;
     mapping(uint256 => uint256) private linkTable;
 
@@ -84,13 +85,13 @@ contract AdsSpotToken is ERC721Enumerable, AccessControl, Ownable, IBunzz{
     }
 
     function getContentMetadata(uint256 tokenId) public view returns (string memory) {
-        ERC721Enumerable contentsContract = ERC721Enumerable(contentsContractAddress);
+        IContentsContract contentsContract = IContentsContract(contentsContractAddress);
         uint256 contentsTokenId = linkTable[tokenId];
         return contentsContract.tokenURI(contentsTokenId);
     }
 
     function linkAdsSpotToContent(uint256 adsSpotTokenId, uint256 contentTokenId) private {
-        ERC721Enumerable contentsContract = ERC721Enumerable(contentsContractAddress);
+        IContentsContract contentsContract = IContentsContract(contentsContractAddress);
         require(ownerOf(adsSpotTokenId) == contentsContract.ownerOf(contentTokenId));
         linkTable[adsSpotTokenId] = contentTokenId;
     }
