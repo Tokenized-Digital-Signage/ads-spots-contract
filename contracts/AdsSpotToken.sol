@@ -90,7 +90,7 @@ contract AdsSpotToken is ERC721Enumerable, AccessControl, Ownable, IBunzz{
         return contentsContract.tokenURI(contentsTokenId);
     }
 
-    function linkAdsSpotToContent(uint256 adsSpotTokenId, uint256 contentTokenId) private {
+    function linkAdsSpotToContent(uint256 adsSpotTokenId, uint256 contentTokenId) public {
         IContentsContract contentsContract = IContentsContract(contentsContractAddress);
         require(ownerOf(adsSpotTokenId) == contentsContract.ownerOf(contentTokenId));
         linkTable[adsSpotTokenId] = contentTokenId;
